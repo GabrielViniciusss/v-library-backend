@@ -1,4 +1,7 @@
 class Person < ApplicationRecord
+
+  has_many :materials, as: :author
+  
   validate :date_of_birth_cannot_be_in_the_future
 
   validates :name, presence: true, length: { minimum: 3, maximum: 80 } # nome obrigatorio de no minimo 3 caracteres e no máximo 80
