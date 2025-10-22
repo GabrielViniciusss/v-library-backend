@@ -17,6 +17,9 @@ Rails.application.routes.draw do
                  sessions: 'api/users/sessions',         # aponta para controladores customizados (arquivos do nosso)
                  registrations: 'api/users/registrations'
                }
+
+    resources :people         # Adiciona as 7 rotas RESTful padrão 
+    resources :institutions
   end
 
   root "application#index"
