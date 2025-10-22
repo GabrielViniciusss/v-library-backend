@@ -20,6 +20,9 @@ Rails.application.routes.draw do
 
     resources :people         # Adiciona as 7 rotas RESTful padrão 
     resources :institutions
+    resources :books
+    resources :articles
+    resources :videos
   end
 
   root "application#index"

@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::API
 
   include Pundit::Authorization
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   # Este método 'index' responde à rota 'root "application#index"' que definimos no 'routes.rb'. É uma "página inicial" para a nossa API.
   def index
     render json: { message: 'Welcome to the v-library-backend API' }
@@ -31,4 +32,13 @@ class ApplicationController < ActionController::API
   def current_user
     warden.user(scope: :user)
   end
+
+  private
+
+  def user_not_authorized
+    render json: {
+      status: { code: 403, message: 'Forbidden. You do not have permission to perform this action.' }
+    }, status: :forbidden
+  end
+
 end
