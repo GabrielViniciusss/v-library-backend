@@ -25,6 +25,9 @@ gem "rack-cors"
 gem "devise"
 gem "devise-jwt"
 
+# Para serialização JSON (padrão API)
+gem 'jsonapi-serializer'
+
 # gem para Permissões 
 gem "pundit"
 

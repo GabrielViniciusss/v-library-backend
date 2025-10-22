@@ -1,12 +1,23 @@
+# config/routes.rb
 Rails.application.routes.draw do
-  devise_for :users
+
+  mount Rswag::Ui::Engine => '/api-docs' # monta a interface do Swagger
   mount Rswag::Api::Engine => '/api-docs'
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
+  # Configuração do Devise
+  scope 'api/' do
+    devise_for :users,                   # cria rotas para o modelo User, com algumas regras
+               path: '',                 # remove o prefixo 'users' das rotas
+               path_names: {          
+                 sign_in: 'login',
+                 sign_out: 'logout',     # personaliza os nomes das rotas
+                 registration: 'signup'
+               },
+               controllers: {
+                 sessions: 'api/users/sessions',         # aponta para controladores customizados (arquivos do nosso)
+                 registrations: 'api/users/registrations'
+               }
+  end
 
-  # Defines the root path route ("/")
-  # root "posts#index"
+  root "application#index"
 end

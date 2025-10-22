@@ -4,6 +4,6 @@ class User < ApplicationRecord
   # Devise já valida email (formato, unicidade) e senha (mínimo de 6) por padrão através do módulo :validatable.
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :jwt_authenticatable, jwt_revocation_strategy: Devise::JWT::RevocationStrategies::Null
+         :jwt_authenticatable, jwt_revocation_strategy: Devise::JWT::RevocationStrategies::Null 
   
 end
