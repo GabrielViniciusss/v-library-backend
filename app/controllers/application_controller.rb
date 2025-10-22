@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::API
-  # Este método 'index' responde à rota 'root "application#index"'
-  # que definimos no 'routes.rb'.
-  # É uma "página inicial" para a nossa API.
+
+  include Pundit::Authorization
+  # Este método 'index' responde à rota 'root "application#index"' que definimos no 'routes.rb'. É uma "página inicial" para a nossa API.
   def index
     render json: { message: 'Welcome to the v-library-backend API' }
   end
