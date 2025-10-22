@@ -1,0 +1,20 @@
+# config/database.yml
+
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: v_library_backend_development
+  username: postgres
+  password: "password" 
+  host: localhost 
+
+test:
+  <<: *default
+  database: v_library_backend_test
+  username: postgres
+  password: "password" 
+  host: localhost
