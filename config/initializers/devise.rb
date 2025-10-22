@@ -97,7 +97,7 @@ Devise.setup do |config|
   # Notice that if you are skipping storage for all authentication paths, you
   # may want to disable generating routes to Devise's sessions controller by
   # passing skip: :sessions to `devise_for` in your config/routes.rb
-  config.skip_session_storage = [:http_auth]
+  config.skip_session_storage = [:http_auth, :database_authenticatable]
 
   # By default, Devise cleans up the CSRF token on authentication to
   # avoid CSRF token fixation attacks. This means that, when using AJAX
@@ -310,4 +310,18 @@ Devise.setup do |config|
   # When set to false, does not sign a user in automatically after their password is
   # changed. Defaults to true, so a user is signed in automatically after changing a password.
   # config.sign_in_after_change_password = true
+
+  config.jwt do |jwt|
+    jwt.secret = 'ac5a93d16772ff4d529c2f1ef4def1d4d92c653ed5c0eaa4334a42ec2b07a25bca3852f808093278aaec234b78e3e0dbba2ff1baecb25385561eeb9044d3ea1c'
+
+    jwt.dispatch_requests = [  # Define quais rotas responderão com um token
+      ['POST', %r{^/login$}]
+    ]
+    jwt.revocation_requests = [ # Define quais rotas invalidarão um token
+      ['DELETE', %r{^/logout$}]
+    ]
+
+    jwt.expiration_time = 1.day.to_i  # Define o "prazo de validade" do token
+  end
+
 end
