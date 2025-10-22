@@ -9,8 +9,18 @@ class Api::PeopleController < ApplicationController
 
   # GET /api/people
   def index
-    @people = Person.all
-    render json: PersonSerializer.new(@people).serializable_hash
+    #'.per(10)' define o limite de 10 por página
+    @people = Person.page(params[:page]).per(10)
+
+    options = {
+      meta: {
+        total_pages: @people.total_pages,
+        total_count: @people.total_count,
+        current_page: @people.current_page
+      }
+    }
+
+    render json: PersonSerializer.new(@people, options).serializable_hash
   end
 
   # GET /api/people/:id

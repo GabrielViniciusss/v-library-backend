@@ -6,8 +6,17 @@ class Api::BooksController < ApplicationController
 
   # GET /api/books
   def index
-    @books = Book.all
-    render json: BookSerializer.new(@books).serializable_hash
+    @books = Book.page(params[:page]).per(10)
+
+    options = {
+      meta: {
+        total_pages: @books.total_pages,
+        total_count: @books.total_count,
+        current_page: @books.current_page
+      }
+    }
+
+    render json: BookSerializer.new(@books,options).serializable_hash
   end
 
   # GET /api/books/:id
@@ -17,13 +26,26 @@ class Api::BooksController < ApplicationController
 
   # POST /api/books
   def create
-    @book = Book.new(book_params)
+    local_book_params = book_params
 
-    # 1. Define o 'criador' como o usuário logado
-    @book.user = current_user 
+    # Pega o ISBN (se existir)
+    isbn = local_book_params[:isbn]
 
-    # 2. Autoriza a ação (Pundit vai chamar MaterialPolicy#create?)
-    authorize @book
+    # Se o ISBN foi dado E (o título OU as páginas estão em branco)
+    if isbn.present? && (local_book_params[:title].blank? || local_book_params[:pages].blank?)
+
+      # chama service
+      external_data = OpenLibraryService.new(isbn).fetch_book_data
+      if external_data
+        local_book_params[:title] = local_book_params[:title].presence || external_data[:title]
+        local_book_params[:pages] = local_book_params[:pages].presence || external_data[:pages]
+      end
+    end
+
+    @book = Book.new(local_book_params)
+
+    @book.user = current_user # Define o criador
+    authorize @book # Pundit verifica MaterialPolicy#create?
 
     if @book.save
       render json: BookSerializer.new(@book).serializable_hash, status: :created # 201

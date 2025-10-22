@@ -6,8 +6,17 @@ class Api::InstitutionsController < ApplicationController
 
   # GET /api/institutions
   def index
-    @institutions = Institution.all
-    render json: InstitutionSerializer.new(@institutions).serializable_hash
+    @institutions = Institution.page(params[:page]).per(10)
+
+    options = {
+      meta: {
+        total_pages: @institutions.total_pages,
+        total_count: @institutions.total_count,
+        current_page: @institutions.current_page
+      }
+    }
+
+    render json: InstitutionSerializer.new(@institutions, options).serializable_hash
   end
 
   # GET /api/institutions/:id

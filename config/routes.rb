@@ -23,6 +23,9 @@ Rails.application.routes.draw do
     resources :books
     resources :articles
     resources :videos
+
+    # GET /api/search -> aponta para a ação 'index' do 'search_controller'
+    get 'search', to: 'search#index'
   end
 
   root "application#index"

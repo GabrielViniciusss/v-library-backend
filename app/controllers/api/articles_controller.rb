@@ -5,8 +5,17 @@ class Api::ArticlesController < ApplicationController
 
   # GET /api/articles
   def index
-    @articles = Article.all
-    render json: ArticleSerializer.new(@articles).serializable_hash
+    @articles = Article.page(params[:page]).per(10)
+
+    options = {
+      meta: {
+        total_pages: @articles.total_pages,
+        total_count: @articles.total_count,
+        current_page: @articles.current_page
+      }
+    }
+
+    render json: ArticleSerializer.new(@articles, options).serializable_hash
   end
 
   # GET /api/articles/:id

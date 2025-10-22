@@ -6,8 +6,17 @@ class Api::VideosController < ApplicationController
 
   # GET /api/videos
   def index
-    @videos = Video.all
-    render json: VideoSerializer.new(@videos).serializable_hash
+    @videos = Video.page(params[:page]).per(10)
+
+    options = {
+      meta: {
+        total_pages: @videos.total_pages,
+        total_count: @videos.total_count,
+        current_page: @videos.current_page
+      }
+    }
+
+    render json: VideoSerializer.new(@videos,options).serializable_hash
   end
 
   # GET /api/videos/:id
