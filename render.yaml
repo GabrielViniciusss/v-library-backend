@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: v-library-backend
+    runtime: docker
+    plan: free
+    autoDeploy: true
+    envVars:
+      - key: RAILS_ENV
+        value: production
+      - key: RACK_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      # Set these in the Render Dashboard (preferred), values here are just placeholders
+      - key: DATABASE_URL
+        generateValue: false
+      - key: DEVISE_JWT_SECRET
+        generateValue: false
+    # With Docker runtime, Render uses your Dockerfile to build and run.
+    # The Rails docker entrypoint will run `rails db:prepare` on boot.

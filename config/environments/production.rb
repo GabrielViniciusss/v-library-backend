@@ -79,7 +79,8 @@ Rails.application.configure do
   # Enable DNS rebinding protection and other `Host` header attacks.
   # Allow Heroku app hostnames by default; you can further restrict via RAILS_HOST.
   config.hosts = [
-    /.*\.herokuapp\.com/,
+    /.*\.herokuapp\.com/,  # Heroku
+    /.*\.onrender\.com/,   # Render
   ]
   if ENV["RAILS_HOST"].present?
     config.hosts << ENV["RAILS_HOST"]
