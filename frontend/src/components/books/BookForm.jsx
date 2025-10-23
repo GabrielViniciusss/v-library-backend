@@ -27,29 +27,44 @@ const BookForm = () => {
     e.preventDefault();
     setError('');
 
-    if (!pages) {
-      setError('Number of pages is always required.');
-      return;
-    }
-    if (!isbn && (!title || !authorId)) {
-      setError('Please provide an ISBN, or both a Title and an Author.');
-      return;
+    let bookData = {};
+    let isValid = false;
+
+    // Cenário 1: Criação via ISBN
+    if (isbn) {
+      if (!pages) {
+        setError('The Pages field is required, even when using ISBN.');
+        return;
+      }
+      bookData = {
+        isbn,
+        pages,
+        status: 'published',
+      };
+      isValid = true;
+    } 
+    // Cenário 2: Criação Manual
+    else if (title && authorId && pages) {
+      bookData = {
+        title,
+        author_id: authorId,
+        pages,
+        status: 'published',
+      };
+      isValid = true;
     }
 
-    const bookData = {
-      status: 'published',
-      pages,
-    };
-
-    if (title) bookData.title = title;
-    if (isbn) bookData.isbn = isbn;
-    if (authorId) bookData.author_id = authorId;
+    if (!isValid) {
+      setError('Provide an ISBN (and pages), or manually enter Title, Author, and Pages.');
+      return;
+    }
 
     try {
       await apiClient.post('/books', { book: bookData });
       navigate('/books');
     } catch (err) {
-      setError(err.response?.data?.errors?.join(', ') || 'Could not create the book. Please check the details and try again.');
+      const errorMsg = err.response?.data?.errors?.join(', ') || 'Could not create the book. Please check the details and try again.';
+      setError(errorMsg);
     }
   };
 

@@ -26,41 +26,44 @@ class Api::BooksController < ApplicationController
 
   # POST /api/books
   def create
-    local_book_params = book_params
-    isbn = local_book_params[:isbn]
+    isbn = params.dig(:book, :isbn)
 
-    @book = Book.new(local_book_params)
-    @book.user = current_user # Define o criador
-
-    # Cenário 1: Criação via ISBN
     if isbn.present?
+      # --- Cenário 1: Criação via ISBN ---
+      @book = Book.new(isbn: isbn, user: current_user)
       begin
         external_data = OpenLibraryService.new(isbn).fetch_book_data
-        if external_data
-          @book.title = @book.title.presence || external_data[:title]
-          @book.pages = @book.pages.presence || external_data[:pages]
-
+        if external_data && external_data[:title]
+          @book.title = external_data[:title]
+          @book.pages = external_data[:pages]
           if external_data[:authors].present?
             author_name = external_data[:authors].first
-            # Encontra ou cria o autor e o associa ao livro
             @book.author = Person.find_or_create_by(name: author_name)
           end
+        else
+          @book.errors.add(:isbn, "was not found or returned incomplete data from the external library")
         end
       rescue => e
-        # Se a busca externa falhar, registra o erro, mas não impede a criação do livro.
-        # O livro será criado apenas com os dados fornecidos manualmente (se houver).
         Rails.logger.error "OpenLibraryService failed for ISBN #{isbn}: #{e.message}"
+        @book.errors.add(:base, "An error occurred while fetching data for the given ISBN.")
       end
-    end
-    # Se não houver ISBN, o @book já foi inicializado com os parâmetros manuais (incluindo author_id)
-    # e a associação de autor funcionará se o author_id for válido.
-
-    authorize @book # Pundit verifica MaterialPolicy#create?
-
-    if @book.save
-      render json: BookSerializer.new(@book).serializable_hash, status: :created # 201
     else
-      render json: { errors: @book.errors.full_messages }, status: :unprocessable_entity # 422
+      # --- Cenário 2: Criação Manual ---
+      # Garante que apenas os parâmetros manuais sejam usados
+      manual_params = book_params.except(:isbn)
+      @book = Book.new(manual_params)
+      @book.author_type = 'Person' if manual_params[:author_id].present? # Define o tipo para a associação polimórfica
+      @book.user = current_user
+    end
+
+    authorize @book
+
+    # A validação do modelo será executada no @book.save
+    if @book.errors.empty? && @book.save
+      render json: BookSerializer.new(@book).serializable_hash, status: :created
+    else
+      # Se o save falhar, os erros de validação do modelo serão adicionados.
+      render json: { errors: @book.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
