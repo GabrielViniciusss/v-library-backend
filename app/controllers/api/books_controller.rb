@@ -27,24 +27,34 @@ class Api::BooksController < ApplicationController
   # POST /api/books
   def create
     local_book_params = book_params
-
-    # Pega o ISBN (se existir)
     isbn = local_book_params[:isbn]
 
-    # Se o ISBN foi dado E (o título OU as páginas estão em branco)
-    if isbn.present? && (local_book_params[:title].blank? || local_book_params[:pages].blank?)
+    @book = Book.new(local_book_params)
+    @book.user = current_user # Define o criador
 
-      # chama service
-      external_data = OpenLibraryService.new(isbn).fetch_book_data
-      if external_data
-        local_book_params[:title] = local_book_params[:title].presence || external_data[:title]
-        local_book_params[:pages] = local_book_params[:pages].presence || external_data[:pages]
+    # Cenário 1: Criação via ISBN
+    if isbn.present?
+      begin
+        external_data = OpenLibraryService.new(isbn).fetch_book_data
+        if external_data
+          @book.title = @book.title.presence || external_data[:title]
+          @book.pages = @book.pages.presence || external_data[:pages]
+
+          if external_data[:authors].present?
+            author_name = external_data[:authors].first
+            # Encontra ou cria o autor e o associa ao livro
+            @book.author = Person.find_or_create_by(name: author_name)
+          end
+        end
+      rescue => e
+        # Se a busca externa falhar, registra o erro, mas não impede a criação do livro.
+        # O livro será criado apenas com os dados fornecidos manualmente (se houver).
+        Rails.logger.error "OpenLibraryService failed for ISBN #{isbn}: #{e.message}"
       end
     end
+    # Se não houver ISBN, o @book já foi inicializado com os parâmetros manuais (incluindo author_id)
+    # e a associação de autor funcionará se o author_id for válido.
 
-    @book = Book.new(local_book_params)
-
-    @book.user = current_user # Define o criador
     authorize @book # Pundit verifica MaterialPolicy#create?
 
     if @book.save

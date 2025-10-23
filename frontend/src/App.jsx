@@ -4,6 +4,8 @@ import SignIn from './components/auth/SignIn.jsx';
 import SignUp from './components/auth/SignUp.jsx';
 import BookList from './components/books/BookList.jsx';
 import BookForm from './components/books/BookForm.jsx';
+import AuthorList from './components/authors/AuthorList.jsx';
+import AuthorForm from './components/authors/AuthorForm.jsx';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('token'));
@@ -30,6 +32,7 @@ const App = () => {
                 {isAuthenticated && (
                   <>
                     <Link to="/books" className="text-gray-600 hover:text-indigo-600">Books</Link>
+                    <Link to="/authors" className="text-gray-600 hover:text-indigo-600">Authors</Link>
                     <Link to="/create-book" className="text-gray-600 hover:text-indigo-600">Create Book</Link>
                   </>
                 )}
@@ -63,6 +66,8 @@ const App = () => {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/books" element={<BookList />} />
             <Route path="/create-book" element={<BookForm />} />
+            <Route path="/authors" element={<AuthorList />} />
+            <Route path="/authors/new" element={<AuthorForm />} />
             <Route path="/" element={<Home />} />
           </Routes>
         </main>

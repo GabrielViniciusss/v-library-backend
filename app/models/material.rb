@@ -12,7 +12,9 @@ class Material < ApplicationRecord
     archived: 'arquivado' 
   }
 
-  validates :title, presence: true, length: { minimum: 3, maximum: 100 } 
+  # A validação do título será movida para os modelos filhos (Book, etc.)
+  # para permitir lógicas condicionais mais complexas.
+  validates :title, length: { minimum: 3, maximum: 100 }, allow_blank: true
   validates :description, length: { maximum: 1000 }, allow_blank: true 
   
   # Garante que o status seja um dos valores definidos no 'enum'
