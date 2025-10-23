@@ -18,3 +18,21 @@ test:
   username: postgres
   password: "password" 
   host: localhost
+
+production:
+  primary:
+    <<: *default
+    url: <%= ENV["DATABASE_URL"] %>
+    schema_dump: db/schema.rb
+  cache:
+    <<: *default
+    url: <%= ENV["DATABASE_URL"] %>
+    schema_dump: db/cache_schema.rb
+  queue:
+    <<: *default
+    url: <%= ENV["DATABASE_URL"] %>
+    schema_dump: db/queue_schema.rb
+  cable:
+    <<: *default
+    url: <%= ENV["DATABASE_URL"] %>
+    schema_dump: db/cable_schema.rb
