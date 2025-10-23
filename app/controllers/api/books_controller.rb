@@ -9,6 +9,7 @@ class Api::BooksController < ApplicationController
     @books = Book.page(params[:page]).per(10)
 
     options = {
+      include: [:author], # Adiciona os dados do autor na resposta
       meta: {
         total_pages: @books.total_pages,
         total_count: @books.total_count,
