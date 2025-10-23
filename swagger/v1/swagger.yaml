@@ -607,6 +607,8 @@ paths:
 servers:
 - url: http://127.0.0.1:3000
   description: Development server
+- url: https://v-library-backend.onrender.com/
+  description: Production server
 components:
   securitySchemes:
     Bearer:
