@@ -317,7 +317,8 @@ Devise.setup do |config|
   end
 
   config.jwt do |jwt|
-    jwt.secret = Rails.application.credentials.devise_jwt_secret  # Define a chave secreta usada para assinar os tokens JWT que está nas credenciais criptografadas do Rails
+    # Prefer an explicit env var in production, fallback to Rails credentials
+    jwt.secret = ENV["DEVISE_JWT_SECRET"] || Rails.application.credentials.devise_jwt_secret  # Define a chave secreta usada para assinar os tokens JWT
 
     jwt.dispatch_requests = [  # Define quais rotas responderão com um token
       ['POST', %r{^/login$}]
