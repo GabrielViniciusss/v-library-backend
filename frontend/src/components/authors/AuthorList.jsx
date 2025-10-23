@@ -45,7 +45,7 @@ const AuthorList = () => {
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {authors.length > 0 ? (
           authors.map((author) => (
-            <div key={author.id} className="p-6 bg-white rounded-lg shadow-md">
+            <div key={author.id} className="p-6 bg-white rounded-xl shadow-md">
               <h2 className="text-xl font-semibold text-gray-900">{author.attributes.name}</h2>
               <p className="mt-2 text-gray-600">
                 Born: {new Date(author.attributes.date_of_birth).toLocaleDateString()}

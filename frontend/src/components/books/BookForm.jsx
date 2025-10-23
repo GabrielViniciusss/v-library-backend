@@ -78,29 +78,6 @@ const BookForm = () => {
           {error && <p className="mb-4 text-center text-red-500">{error}</p>}
           <form className="space-y-6" onSubmit={handleSubmit}>
             
-            <div className="relative my-4">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300"></div>
-              </div>
-              <div className="relative flex justify-center">
-                <span className="px-2 text-sm text-gray-500 bg-white">Book Details</span>
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="pages" className="text-sm font-medium text-gray-700">
-                Pages (Required)
-              </label>
-              <input
-                id="pages"
-                name="pages"
-                type="number"
-                value={pages}
-                onChange={(e) => setPages(e.target.value)}
-                className="w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-              />
-            </div>
-
             <div className="relative my-8">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-300"></div>
@@ -120,8 +97,7 @@ const BookForm = () => {
                 type="text"
                 value={isbn}
                 onChange={(e) => setIsbn(e.target.value)}
-                className="w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                placeholder="e.g., 9780140328721 (Title and Author will be auto-filled)"
+                className="w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
               />
             </div>
 
@@ -144,7 +120,7 @@ const BookForm = () => {
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
               />
             </div>
 
@@ -157,7 +133,7 @@ const BookForm = () => {
                 name="authorId"
                 value={authorId}
                 onChange={(e) => setAuthorId(e.target.value)}
-                className="w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
               >
                 <option value="">Select an Author</option>
                 {authors.map((author) => (
@@ -168,10 +144,24 @@ const BookForm = () => {
               </select>
             </div>
             
+            <div>
+              <label htmlFor="pages" className="text-sm font-medium text-gray-700">
+                Pages
+              </label>
+              <input
+                id="pages"
+                name="pages"
+                type="number"
+                value={pages}
+                onChange={(e) => setPages(e.target.value)}
+                className="w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              />
+            </div>
+            
             <div className="pt-4">
               <button
                 type="submit"
-                className="w-full px-4 py-2 font-bold text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="w-full px-4 py-2 font-bold text-white bg-indigo-600 rounded-lg shadow hover:bg-indigo-700 hover:translate-y-[1px] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition"
               >
                 Add Book
               </button>

@@ -21,7 +21,7 @@ const App = () => {
     };
 
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-slate-50">
         <nav className="bg-white shadow-sm">
           <div className="container px-4 mx-auto">
             <div className="flex items-center justify-between h-16">
@@ -31,26 +31,26 @@ const App = () => {
               <div className="hidden md:flex items-center space-x-6">
                 {isAuthenticated && (
                   <>
-                    <Link to="/books" className="text-gray-600 hover:text-indigo-600">Books</Link>
-                    <Link to="/authors" className="text-gray-600 hover:text-indigo-600">Authors</Link>
-                    <Link to="/create-book" className="text-gray-600 hover:text-indigo-600">Create Book</Link>
+                    <Link to="/books" className="text-gray-700 hover:text-indigo-600 transition-colors">Books</Link>
+                    <Link to="/authors" className="text-gray-700 hover:text-indigo-600 transition-colors">Authors</Link>
+                    <Link to="/create-book" className="text-gray-700 hover:text-indigo-600 transition-colors">Create Book</Link>
                   </>
                 )}
               </div>
               <div className="flex items-center space-x-4">
                 {!isAuthenticated ? (
                   <>
-                    <Link to="/signin" className="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-md hover:bg-gray-100">
+                    <Link to="/signin" className="px-4 py-2 text-sm font-medium text-gray-700 border border-slate-200 rounded-lg hover:bg-slate-100 transition">
                       Sign In
                     </Link>
-                    <Link to="/signup" className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700">
+                    <Link to="/signup" className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg shadow hover:bg-indigo-700 hover:translate-y-[1px] transition">
                       Sign Up
                     </Link>
                   </>
                 ) : (
                   <button
                     onClick={handleLogout}
-                    className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700"
+                    className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg shadow hover:bg-red-700 hover:translate-y-[1px] transition"
                   >
                     Logout
                   </button>
@@ -83,11 +83,11 @@ const App = () => {
 };
 
 const Home = () => (
-  <div className="py-20 text-center bg-white rounded-lg shadow-lg">
+  <div className="py-20 text-center bg-white rounded-xl shadow-md">
     <h1 className="text-5xl font-bold text-gray-800">Welcome to v-library</h1>
     <p className="mt-4 text-xl text-gray-600">Your digital space for managing and discovering new materials.</p>
     <div className="mt-8">
-      <Link to="/books" className="px-6 py-3 font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700">
+      <Link to="/books" className="px-6 py-3 font-medium text-white bg-indigo-600 rounded-lg shadow hover:bg-indigo-700 hover:translate-y-[1px] transition">
         Explore Books
       </Link>
     </div>

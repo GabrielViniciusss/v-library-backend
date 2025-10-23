@@ -53,7 +53,7 @@ const BookList = () => {
       </div>
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {books.map((book) => (
-          <div key={book.id} className="overflow-hidden bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+          <div key={book.id} className="overflow-hidden bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
             <div className="p-6">
               <h3 className="text-xl font-bold text-gray-800 truncate">{book.title}</h3>
               <p className="mt-1 text-sm font-medium text-gray-700">by {book.authorName}</p>
