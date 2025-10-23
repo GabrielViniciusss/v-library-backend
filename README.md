@@ -26,6 +26,7 @@ Esta é uma API RESTful desenvolvida em Ruby on Rails para gerenciar uma platafo
 * **Cliente HTTP:** Faraday
 * **Serialização JSON:** jsonapi-serializer
 * **Testes/Documentação:** RSpec, Rswag (Swagger)
+* **GraphQL:** graphql-ruby
 
 ## Configuração do Ambiente (Setup)
 
@@ -85,6 +86,32 @@ bundle exec rails s
 ```
 
 A API estará acessível em http://localhost:3000.
+
+## Produção e Deploy
+
+Aplicação em produção (Render):
+
+https://v-library-backend.onrender.com
+
+- Swagger (docs): https://v-library-backend.onrender.com/api-docs
+- GraphQL (endpoint): POST https://v-library-backend.onrender.com/graphql
+
+Guia completo de deploy (Render + Neon): veja `docs/deploy-render.md`.
+
+### Variáveis mínimas de ambiente (produção)
+
+Defina as seguintes variáveis no provedor (Render):
+
+```
+RAILS_ENV=production
+DATABASE_URL=postgresql://<usuario>:<senha>@<host>/<banco>?sslmode=require
+SECRET_KEY_BASE=<valor_de_`bundle exec rails secret`>
+DEVISE_JWT_SECRET=<outro_valor_de_`bundle exec rails secret`>
+```
+
+Observações:
+- Use dois valores diferentes para `SECRET_KEY_BASE` e `DEVISE_JWT_SECRET`.
+- Se sua conexão Postgres exigir `channel_binding`, e houver erro, troque `channel_binding=require` por `channel_binding=prefer` ou remova esse parâmetro da `DATABASE_URL`.
 
 ## Documentação e Testes
 
