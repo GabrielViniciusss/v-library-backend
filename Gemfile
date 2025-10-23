@@ -57,3 +57,7 @@ group :development, :test do
   gem "database_cleaner-active_record" # Para limpar o BD de teste
 end
 
+group :development do
+  gem "graphiql-rails", require: false
+end
+

@@ -154,6 +154,68 @@ Faça uma requisição `DELETE` para `/api/logout` (enviando o token no header `
 *   **Materiais (Vídeos):** CRUD em `/api/videos`
 *   **Busca:** `GET /api/search?q=<termo>`
 
+## GraphQL
+
+Além dos endpoints REST, a API expõe um endpoint GraphQL:
+
+* Endpoint: `POST /graphql`
+
+### Consultas disponíveis (iniciais)
+
+1) Listar materiais com paginação
+
+Query:
+
+```
+query($page: Int, $perPage: Int) {
+  materials(page: $page, perPage: $perPage) {
+    id
+    title
+    status
+    type
+  }
+}
+```
+
+Variáveis (JSON):
+
+```
+{ "page": 1, "perPage": 10 }
+```
+
+2) Buscar um material por ID
+
+```
+query($id: ID!) {
+  material(id: $id) {
+    id
+    title
+    type
+  }
+}
+```
+
+Variáveis:
+
+```
+{ "id": 123 }
+```
+
+3) Listar autores
+
+```
+{
+  people { id name }
+  institutions { id name city }
+}
+```
+
+Observações:
+
+* As variáveis podem ser enviadas como JSON (recomendado) definindo `Content-Type: application/json`.
+* Os nomes dos argumentos seguem o padrão camelCase na API (ex: `perPage`).
+* Em desenvolvimento, você pode usar clientes como Insomnia, Postman ou o app GraphiQL para testar queries.
+
 Para detalhes completos sobre parâmetros, schemas e respostas, consulte a **documentação interativa do Swagger**.
 
 ## Regras de Negócio Implementadas

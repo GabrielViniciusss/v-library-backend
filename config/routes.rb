@@ -1,5 +1,6 @@
 # config/routes.rb
 Rails.application.routes.draw do
+  post "/graphql", to: "graphql#execute"
 
   mount Rswag::Ui::Engine => '/api-docs' # monta a interface do Swagger
   mount Rswag::Api::Engine => '/api-docs'
