@@ -44,9 +44,8 @@ RSpec.describe 'api/books', type: :request do
 
       response(201, 'created') do
         let!(:user) { create(:user) }
-        # Modificado: Adiciona JTI
         let(:token) do
-          payload = { sub: user.id, exp: 1.day.from_now.to_i, jti: SecureRandom.uuid }
+          payload = { sub: user.id, scp: 'user', exp: 1.day.from_now.to_i, jti: SecureRandom.uuid }
           JWT.encode(payload, Rails.application.credentials.devise_jwt_secret)
         end
         let(:Authorization) { "Bearer #{token}" }
@@ -98,20 +97,19 @@ RSpec.describe 'api/books', type: :request do
       }
 
       response(200, 'successful') do
-        # Modificado: Adiciona JTI
         let(:token) do
-          payload = { sub: creator_user.id, exp: 1.day.from_now.to_i, jti: SecureRandom.uuid }
+          payload = { sub: creator_user.id, scp: 'user', exp: 1.day.from_now.to_i, jti: SecureRandom.uuid } # Usa creator_user
           JWT.encode(payload, Rails.application.credentials.devise_jwt_secret)
         end
+        # ---------------------
         let(:Authorization) { "Bearer #{token}" }
         let(:book) { { book: { title: 'New Title' } } }
         run_test!
       end
 
       response(403, 'forbidden') do
-        # Modificado: Adiciona JTI
         let(:token) do
-          payload = { sub: other_user.id, exp: 1.day.from_now.to_i, jti: SecureRandom.uuid }
+          payload = { sub: other_user.id, scp: 'user', exp: 1.day.from_now.to_i, jti: SecureRandom.uuid } # Usa other_user
           JWT.encode(payload, Rails.application.credentials.devise_jwt_secret)
         end
         let(:Authorization) { "Bearer #{token}" }
@@ -125,9 +123,8 @@ RSpec.describe 'api/books', type: :request do
       security [ Bearer: [] ]
 
       response(204, 'no content') do
-        # Modificado: Adiciona JTI
         let(:token) do
-          payload = { sub: creator_user.id, exp: 1.day.from_now.to_i, jti: SecureRandom.uuid }
+          payload = { sub: creator_user.id, scp: 'user', exp: 1.day.from_now.to_i, jti: SecureRandom.uuid } # Usa creator_user
           JWT.encode(payload, Rails.application.credentials.devise_jwt_secret)
         end
         let(:Authorization) { "Bearer #{token}" }
@@ -135,9 +132,8 @@ RSpec.describe 'api/books', type: :request do
       end
 
       response(403, 'forbidden') do
-        # Modificado: Adiciona JTI
         let(:token) do
-          payload = { sub: other_user.id, exp: 1.day.from_now.to_i, jti: SecureRandom.uuid }
+          payload = { sub: other_user.id, scp: 'user', exp: 1.day.from_now.to_i, jti: SecureRandom.uuid } # Usa other_user
           JWT.encode(payload, Rails.application.credentials.devise_jwt_secret)
         end
         let(:Authorization) { "Bearer #{token}" }

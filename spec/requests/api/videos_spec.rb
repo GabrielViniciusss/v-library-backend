@@ -43,10 +43,14 @@ RSpec.describe 'api/videos', type: :request do
 
       response(201, 'created') do
         let!(:user) { create(:user) }
-        let(:token) { JWT.encode({ sub: user.id, exp: 1.day.from_now.to_i }, Rails.application.credentials.devise_jwt_secret) }
+        # Modificado: Adiciona scp: 'user'
+        let(:token) do
+          payload = { sub: user.id, scp: 'user', exp: 1.day.from_now.to_i, jti: SecureRandom.uuid }
+          JWT.encode(payload, Rails.application.credentials.devise_jwt_secret)
+        end
         let(:Authorization) { "Bearer #{token}" }
         let!(:author) { create(:person) }
-        
+
         let(:video) { { video: { title: 'Palestra sobre Rails', status: 'published', author_id: author.id, author_type: 'Person', duration_in_minutes: 45 } } }
         run_test!
       end
@@ -62,7 +66,7 @@ RSpec.describe 'api/videos', type: :request do
 
   path '/api/videos/{id}' do
     parameter name: 'id', in: :path, type: :string, description: 'ID do vídeo'
-    
+
     let!(:creator_user) { create(:user, email: 'creator@example.com') }
     let!(:other_user) { create(:user, email: 'other@example.com') }
     let!(:author) { create(:person) }
@@ -93,14 +97,22 @@ RSpec.describe 'api/videos', type: :request do
       }
 
       response(200, 'successful') do
-        let(:token) { JWT.encode({ sub: creator_user.id, exp: 1.day.from_now.to_i }, Rails.application.credentials.devise_jwt_secret) }
+        # Modificado: Adiciona scp: 'user' (para creator_user)
+        let(:token) do
+          payload = { sub: creator_user.id, scp: 'user', exp: 1.day.from_now.to_i, jti: SecureRandom.uuid }
+          JWT.encode(payload, Rails.application.credentials.devise_jwt_secret)
+        end
         let(:Authorization) { "Bearer #{token}" }
         let(:video) { { video: { title: 'New Title' } } }
         run_test!
       end
 
       response(403, 'forbidden') do
-        let(:token) { JWT.encode({ sub: other_user.id, exp: 1.day.from_now.to_i }, Rails.application.credentials.devise_jwt_secret) }
+        # Modificado: Adiciona scp: 'user' (para other_user)
+        let(:token) do
+          payload = { sub: other_user.id, scp: 'user', exp: 1.day.from_now.to_i, jti: SecureRandom.uuid }
+          JWT.encode(payload, Rails.application.credentials.devise_jwt_secret)
+        end
         let(:Authorization) { "Bearer #{token}" }
         let(:video) { { video: { title: 'Malicious Title' } } }
         run_test!
@@ -112,13 +124,21 @@ RSpec.describe 'api/videos', type: :request do
       security [ Bearer: [] ]
 
       response(204, 'no content') do
-        let(:token) { JWT.encode({ sub: creator_user.id, exp: 1.day.from_now.to_i }, Rails.application.credentials.devise_jwt_secret) }
+        # Modificado: Adiciona scp: 'user' (para creator_user)
+        let(:token) do
+          payload = { sub: creator_user.id, scp: 'user', exp: 1.day.from_now.to_i, jti: SecureRandom.uuid }
+          JWT.encode(payload, Rails.application.credentials.devise_jwt_secret)
+        end
         let(:Authorization) { "Bearer #{token}" }
         run_test!
       end
 
       response(403, 'forbidden') do
-        let(:token) { JWT.encode({ sub: other_user.id, exp: 1.day.from_now.to_i }, Rails.application.credentials.devise_jwt_secret) }
+        # Modificado: Adiciona scp: 'user' (para other_user)
+        let(:token) do
+          payload = { sub: other_user.id, scp: 'user', exp: 1.day.from_now.to_i, jti: SecureRandom.uuid }
+          JWT.encode(payload, Rails.application.credentials.devise_jwt_secret)
+        end
         let(:Authorization) { "Bearer #{token}" }
         run_test!
       end

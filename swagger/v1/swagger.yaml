@@ -1,0 +1,617 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/articles":
+    get:
+      summary: list articles
+      tags:
+      - Materials (Articles)
+      parameters:
+      - name: page
+        in: query
+        description: Número da página
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create article
+      tags:
+      - Materials (Articles)
+      security:
+      - Bearer: []
+      parameters: []
+      responses:
+        '201':
+          description: created
+        '401':
+          description: unauthorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                article:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      example: Estudo sobre IA
+                    description:
+                      type: string
+                      example: Um artigo...
+                    status:
+                      type: string
+                      example: published
+                    author_id:
+                      type: integer
+                      example: 1
+                    author_type:
+                      type: string
+                      example: Institution
+                    doi:
+                      type: string
+                      example: 10.1000/xyz123
+                  required:
+                  - title
+                  - status
+                  - author_id
+                  - author_type
+                  - doi
+              required:
+              - article
+  "/api/articles/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: ID do artigo
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show article
+      tags:
+      - Materials (Articles)
+      responses:
+        '200':
+          description: successful
+        '404':
+          description: not found
+    put:
+      summary: update article
+      tags:
+      - Materials (Articles)
+      security:
+      - Bearer: []
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '403':
+          description: forbidden
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                article:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+    delete:
+      summary: delete article
+      tags:
+      - Materials (Articles)
+      security:
+      - Bearer: []
+      responses:
+        '204':
+          description: no content
+        '403':
+          description: forbidden
+  "/api/books":
+    get:
+      summary: list books
+      tags:
+      - Materials (Books)
+      parameters:
+      - name: page
+        in: query
+        description: Número da página
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create book
+      tags:
+      - Materials (Books)
+      security:
+      - Bearer: []
+      parameters: []
+      responses:
+        '201':
+          description: created
+        '401':
+          description: unauthorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                book:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      example: O Hobbit
+                    description:
+                      type: string
+                      example: Uma aventura...
+                    status:
+                      type: string
+                      example: published
+                    author_id:
+                      type: integer
+                      example: 1
+                    author_type:
+                      type: string
+                      example: Person
+                    isbn:
+                      type: string
+                      example: '9780547928227'
+                    pages:
+                      type: integer
+                      example: 310
+                  required:
+                  - title
+                  - status
+                  - author_id
+                  - author_type
+                  - isbn
+                  - pages
+              required:
+              - book
+  "/api/books/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: ID do livro
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show book
+      tags:
+      - Materials (Books)
+      responses:
+        '200':
+          description: successful
+        '404':
+          description: not found
+    put:
+      summary: update book
+      tags:
+      - Materials (Books)
+      security:
+      - Bearer: []
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '403':
+          description: forbidden
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                book:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+    delete:
+      summary: delete book
+      tags:
+      - Materials (Books)
+      security:
+      - Bearer: []
+      responses:
+        '204':
+          description: no content
+        '403':
+          description: forbidden
+  "/api/institutions":
+    get:
+      summary: list institutions
+      tags:
+      - Authors (Institutions)
+      parameters:
+      - name: page
+        in: query
+        description: Número da página
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create institution
+      tags:
+      - Authors (Institutions)
+      security:
+      - Bearer: []
+      parameters: []
+      responses:
+        '201':
+          description: created
+        '401':
+          description: unauthorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                institution:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: Universidade de Oxford
+                    city:
+                      type: string
+                      example: Oxford
+                  required:
+                  - name
+                  - city
+              required:
+              - institution
+  "/api/institutions/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: ID da instituição
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show institution
+      tags:
+      - Authors (Institutions)
+      responses:
+        '200':
+          description: successful
+        '404':
+          description: not found
+    put:
+      summary: update institution
+      tags:
+      - Authors (Institutions)
+      security:
+      - Bearer: []
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                institution:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+    delete:
+      summary: delete institution
+      tags:
+      - Authors (Institutions)
+      security:
+      - Bearer: []
+      responses:
+        '204':
+          description: no content
+  "/api/people":
+    get:
+      summary: list people
+      tags:
+      - Authors (People)
+      parameters:
+      - name: page
+        in: query
+        description: Número da página
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create person
+      tags:
+      - Authors (People)
+      security:
+      - Bearer: []
+      parameters: []
+      responses:
+        '201':
+          description: created
+        '401':
+          description: unauthorized
+        '422':
+          description: unprocessable entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                person:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: J.R.R. Tolkien
+                    date_of_birth:
+                      type: string
+                      format: date
+                      example: '1892-01-03'
+                  required:
+                  - name
+                  - date_of_birth
+              required:
+              - person
+  "/api/people/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: ID da pessoa
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show person
+      tags:
+      - Authors (People)
+      responses:
+        '200':
+          description: successful
+        '404':
+          description: not found
+    put:
+      summary: update person
+      tags:
+      - Authors (People)
+      security:
+      - Bearer: []
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                person:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+    delete:
+      summary: delete person
+      tags:
+      - Authors (People)
+      security:
+      - Bearer: []
+      responses:
+        '204':
+          description: no content
+  "/api/signup":
+    post:
+      summary: create registration
+      tags:
+      - Autenticação
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '422':
+          description: unprocessable entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      example: user@example.com
+                    password:
+                      type: string
+                      example: password123
+                    password_confirmation:
+                      type: string
+                      example: password123
+                  required:
+                  - email
+                  - password
+                  - password_confirmation
+              required:
+              - user
+  "/api/login":
+    post:
+      summary: create session
+      tags:
+      - Autenticação
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: unauthorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      example: user@example.com
+                    password:
+                      type: string
+                      example: password123
+                  required:
+                  - email
+                  - password
+              required:
+              - user
+  "/api/videos":
+    get:
+      summary: list videos
+      tags:
+      - Materials (Videos)
+      parameters:
+      - name: page
+        in: query
+        description: Número da página
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create video
+      tags:
+      - Materials (Videos)
+      security:
+      - Bearer: []
+      parameters: []
+      responses:
+        '201':
+          description: created
+        '401':
+          description: unauthorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                video:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      example: Palestra sobre Rails
+                    description:
+                      type: string
+                      example: Uma palestra...
+                    status:
+                      type: string
+                      example: published
+                    author_id:
+                      type: integer
+                      example: 1
+                    author_type:
+                      type: string
+                      example: Person
+                    duration_in_minutes:
+                      type: integer
+                      example: 45
+                  required:
+                  - title
+                  - status
+                  - author_id
+                  - author_type
+                  - duration_in_minutes
+              required:
+              - video
+  "/api/videos/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: ID do vídeo
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show video
+      tags:
+      - Materials (Videos)
+      responses:
+        '200':
+          description: successful
+        '404':
+          description: not found
+    put:
+      summary: update video
+      tags:
+      - Materials (Videos)
+      security:
+      - Bearer: []
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '403':
+          description: forbidden
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                video:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+    delete:
+      summary: delete video
+      tags:
+      - Materials (Videos)
+      security:
+      - Bearer: []
+      responses:
+        '204':
+          description: no content
+        '403':
+          description: forbidden
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com
+components:
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

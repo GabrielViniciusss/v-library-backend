@@ -20,5 +20,10 @@ class Material < ApplicationRecord
   
   # Garante que as associações obrigatórias existam
   validates :user, presence: true 
-  validates :author, presence: true 
+  validates :author, presence: true
+  
+  def policy_class
+    MaterialPolicy
+  end
+  
 end

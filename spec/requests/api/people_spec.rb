@@ -39,9 +39,9 @@ RSpec.describe 'api/people', type: :request do
 
       response(201, 'created') do
         let!(:user) { create(:user) }
-        # Modificado: Adiciona JTI
+        # Modificado: Adiciona scp: 'user'
         let(:token) do
-          payload = { sub: user.id, exp: 1.day.from_now.to_i, jti: SecureRandom.uuid }
+          payload = { sub: user.id, scp: 'user', exp: 1.day.from_now.to_i, jti: SecureRandom.uuid }
           JWT.encode(payload, Rails.application.credentials.devise_jwt_secret)
         end
         let(:Authorization) { "Bearer #{token}" }
@@ -58,9 +58,9 @@ RSpec.describe 'api/people', type: :request do
       
       response(422, 'unprocessable entity') do
         let!(:user) { create(:user) }
-        # Modificado: Adiciona JTI
+        # Modificado: Adiciona scp: 'user'
         let(:token) do
-          payload = { sub: user.id, exp: 1.day.from_now.to_i, jti: SecureRandom.uuid }
+          payload = { sub: user.id, scp: 'user', exp: 1.day.from_now.to_i, jti: SecureRandom.uuid }
           JWT.encode(payload, Rails.application.credentials.devise_jwt_secret)
         end
         let(:Authorization) { "Bearer #{token}" }
@@ -102,10 +102,10 @@ RSpec.describe 'api/people', type: :request do
       }
 
       response(200, 'successful') do
-        let!(:user) { create(:user) }
-        # Modificado: Adiciona JTI
+        let!(:user) { create(:user) } # Cria o usuário para o teste
+        # Modificado: Adiciona scp: 'user'
         let(:token) do
-          payload = { sub: user.id, exp: 1.day.from_now.to_i, jti: SecureRandom.uuid }
+          payload = { sub: user.id, scp: 'user', exp: 1.day.from_now.to_i, jti: SecureRandom.uuid }
           JWT.encode(payload, Rails.application.credentials.devise_jwt_secret)
         end
         let(:Authorization) { "Bearer #{token}" }
@@ -121,10 +121,10 @@ RSpec.describe 'api/people', type: :request do
       security [ Bearer: [] ]
 
       response(204, 'no content') do
-        let!(:user) { create(:user) }
-        # Modificado: Adiciona JTI
+        let!(:user) { create(:user) } # Cria o usuário para o teste
+        # Modificado: Adiciona scp: 'user'
         let(:token) do
-          payload = { sub: user.id, exp: 1.day.from_now.to_i, jti: SecureRandom.uuid }
+          payload = { sub: user.id, scp: 'user', exp: 1.day.from_now.to_i, jti: SecureRandom.uuid }
           JWT.encode(payload, Rails.application.credentials.devise_jwt_secret)
         end
         let(:Authorization) { "Bearer #{token}" }

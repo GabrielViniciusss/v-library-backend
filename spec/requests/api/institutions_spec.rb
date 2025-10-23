@@ -39,13 +39,13 @@ RSpec.describe 'api/institutions', type: :request do
 
       response(201, 'created') do
         let!(:user) { create(:user) }
-        # Modificado: Adiciona JTI
+        # Modificado: Adiciona scp: 'user'
         let(:token) do
-          payload = { sub: user.id, exp: 1.day.from_now.to_i, jti: SecureRandom.uuid }
+          payload = { sub: user.id, scp: 'user', exp: 1.day.from_now.to_i, jti: SecureRandom.uuid }
           JWT.encode(payload, Rails.application.credentials.devise_jwt_secret)
         end
         let(:Authorization) { "Bearer #{token}" }
-        
+
         let(:institution) { { institution: { name: 'Universidade de Oxford', city: 'Oxford' } } }
         run_test!
       end
@@ -90,13 +90,13 @@ RSpec.describe 'api/institutions', type: :request do
 
       response(200, 'successful') do
         let!(:user) { create(:user) }
-        # Modificado: Adiciona JTI
+        # Modificado: Adiciona scp: 'user'
         let(:token) do
-          payload = { sub: user.id, exp: 1.day.from_now.to_i, jti: SecureRandom.uuid }
+          payload = { sub: user.id, scp: 'user', exp: 1.day.from_now.to_i, jti: SecureRandom.uuid }
           JWT.encode(payload, Rails.application.credentials.devise_jwt_secret)
         end
         let(:Authorization) { "Bearer #{token}" }
-        
+
         let(:id) { institution_record.id }
         let(:institution) { { institution: { name: 'MIT Media Lab' } } }
         run_test!
@@ -109,13 +109,13 @@ RSpec.describe 'api/institutions', type: :request do
 
       response(204, 'no content') do
         let!(:user) { create(:user) }
-        # Modificado: Adiciona JTI
+        # Modificado: Adiciona scp: 'user'
         let(:token) do
-          payload = { sub: user.id, exp: 1.day.from_now.to_i, jti: SecureRandom.uuid }
+          payload = { sub: user.id, scp: 'user', exp: 1.day.from_now.to_i, jti: SecureRandom.uuid }
           JWT.encode(payload, Rails.application.credentials.devise_jwt_secret)
         end
         let(:Authorization) { "Bearer #{token}" }
-        
+
         let(:id) { institution_record.id }
         run_test!
       end

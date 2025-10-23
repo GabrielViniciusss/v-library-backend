@@ -311,6 +311,11 @@ Devise.setup do |config|
   # changed. Defaults to true, so a user is signed in automatically after changing a password.
   # config.sign_in_after_change_password = true
 
+  config.warden do |manager|
+    # Define 'jwt' como a estratégia padrão (a ser tentada primeiro)# para o escopo ':user'
+    manager.default_strategies(scope: :user).unshift :jwt
+  end
+
   config.jwt do |jwt|
     jwt.secret = Rails.application.credentials.devise_jwt_secret  # Define a chave secreta usada para assinar os tokens JWT que está nas credenciais criptografadas do Rails
 
