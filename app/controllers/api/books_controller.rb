@@ -30,7 +30,7 @@ class Api::BooksController < ApplicationController
 
     if isbn.present?
       # --- Cenário 1: Criação via ISBN ---
-      @book = Book.new(isbn: isbn, user: current_user)
+      @book = Book.new(isbn: isbn, user: current_user, status: 'published')
       begin
         external_data = OpenLibraryService.new(isbn).fetch_book_data
         if external_data && external_data[:title]
