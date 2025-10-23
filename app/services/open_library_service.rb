@@ -11,7 +11,7 @@ class OpenLibraryService
   # O método principal que nosso controller vai chamar
   def fetch_book_data
     conn = Faraday.new(url: BASE_URL)
-s
+
     response = conn.get('/api/books') do |req|
       req.params['bibkeys'] = "ISBN:#{@isbn}"
       req.params['format'] = 'json'
