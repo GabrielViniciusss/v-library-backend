@@ -1,5 +1,4 @@
 class Api::Users::RegistrationsController < Devise::RegistrationsController  #herda controller de Registro que já vem na gem devise
-  protect_from_forgery with: :null_session
 
   def create
     # 'build_resource' é um método do Devise que cria um novo usuário (ex: User.new) com os parâmetros seguros (sign_up_params)

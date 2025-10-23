@@ -17,15 +17,16 @@ Rails.application.routes.draw do
                  sessions: 'api/users/sessions',         # aponta para controladores customizados (arquivos do nosso)
                  registrations: 'api/users/registrations'
                }
-
-    resources :people         # Adiciona as 7 rotas RESTful padrão 
-    resources :institutions
-    resources :books
-    resources :articles
-    resources :videos
+    scope module: :api do
+      resources :people         # Adiciona as 7 rotas RESTful padrão 
+      resources :institutions
+      resources :books
+      resources :articles
+      resources :videos
+    end
 
     # GET /api/search -> aponta para a ação 'index' do 'search_controller'
-    get 'search', to: 'search#index'
+    get 'search', to: 'api/search#index'
   end
 
   root "application#index"

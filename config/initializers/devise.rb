@@ -312,7 +312,7 @@ Devise.setup do |config|
   # config.sign_in_after_change_password = true
 
   config.jwt do |jwt|
-    jwt.secret = 'ac5a93d16772ff4d529c2f1ef4def1d4d92c653ed5c0eaa4334a42ec2b07a25bca3852f808093278aaec234b78e3e0dbba2ff1baecb25385561eeb9044d3ea1c'
+    jwt.secret = Rails.application.credentials.devise_jwt_secret  # Define a chave secreta usada para assinar os tokens JWT que está nas credenciais criptografadas do Rails
 
     jwt.dispatch_requests = [  # Define quais rotas responderão com um token
       ['POST', %r{^/login$}]

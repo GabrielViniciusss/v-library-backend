@@ -54,5 +54,6 @@ group :development, :test do
   gem "factory_bot_rails" # Para criar dados de teste
   gem "faker"             # Para gerar dados falsos
   gem "rswag-specs"       # Para gerar specs do Swagger
+  gem "database_cleaner-active_record" # Para limpar o BD de teste
 end
 

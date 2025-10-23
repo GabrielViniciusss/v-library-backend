@@ -1,6 +1,4 @@
 class Api::Users::SessionsController < Devise::SessionsController
-  protect_from_forgery with: :null_session
-
   # Sobrescreve o método 'create' da gem
   def create
     # O 'warden' é o "segurança" (middleware) que o Devise usa por baixo dos panos.

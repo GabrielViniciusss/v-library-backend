@@ -12,11 +12,11 @@ class Material < ApplicationRecord
     archived: 'arquivado' 
   }
 
-  validates :title, presence: true, length: { minimum: 3, maximum: 100 } [cite: 51]
-  validates :description, length: { maximum: 1000 }, allow_blank: true [cite: 51]
+  validates :title, presence: true, length: { minimum: 3, maximum: 100 } 
+  validates :description, length: { maximum: 1000 }, allow_blank: true 
   
   # Garante que o status seja um dos valores definidos no 'enum'
-  validates :status, presence: true, inclusion: { in: statuses.keys } [cite: 51]
+  validates :status, presence: true, inclusion: { in: statuses.keys } 
   
   # Garante que as associações obrigatórias existam
   validates :user, presence: true 
