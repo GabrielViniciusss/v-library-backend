@@ -76,8 +76,7 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  # Only use :id for inspections in production.
-  config.active_record.attributes_for_inspect = [ :id ]
+  # Note: attributes_for_inspect is available in newer Rails versions; omit on Rails 7.1
 
   # Enable DNS rebinding protection and other `Host` header attacks.
   # Allow Heroku app hostnames by default; you can further restrict via RAILS_HOST.
