@@ -1,4 +1,5 @@
 # Gemfile
+ruby "3.3.9"
 
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
