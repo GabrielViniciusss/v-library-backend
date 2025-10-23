@@ -38,7 +38,13 @@ class Api::BooksController < ApplicationController
           @book.pages = external_data[:pages]
           if external_data[:authors].present?
             author_name = external_data[:authors].first
-            @book.author = Person.find_or_create_by(name: author_name)
+            # Encontra ou inicializa o autor para poder adicionar a data de nascimento se for um novo registro
+            author = Person.find_or_initialize_by(name: author_name)
+            if author.new_record?
+              author.date_of_birth = Date.new(1970, 1, 1) # Data padrão
+              author.save!
+            end
+            @book.author = author
           end
         else
           @book.errors.add(:isbn, "was not found or returned incomplete data from the external library")

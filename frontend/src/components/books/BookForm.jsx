@@ -32,19 +32,19 @@ const BookForm = () => {
 
     // Cenário 1: Criação via ISBN
     if (isbn) {
-      if (!pages) {
-        setError('The Pages field is required, even when using ISBN.');
-        return;
-      }
       bookData = {
         isbn,
-        pages,
+        pages: pages || '0', // Envia '0' se as páginas não forem fornecidas
         status: 'published',
       };
       isValid = true;
     } 
     // Cenário 2: Criação Manual
     else if (title && authorId && pages) {
+      if (!pages) {
+        setError('The Pages field is required for manual entry.');
+        return;
+      }
       bookData = {
         title,
         author_id: authorId,
@@ -97,7 +97,6 @@ const BookForm = () => {
                 type="number"
                 value={pages}
                 onChange={(e) => setPages(e.target.value)}
-                required
                 className="w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               />
             </div>
