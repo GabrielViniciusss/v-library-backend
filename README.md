@@ -87,6 +87,13 @@ bundle exec rails s
 
 A API estará acessível em http://localhost:3000.
 
+## Integração com API Externa (OpenLibrary) — ISBNs testados
+
+Para testar o cadastro de livros via ISBN (a API buscará automaticamente título, autor e número de páginas na OpenLibrary), você pode usar estes ISBNs que possuem dados completos:
+
+- 9780140328721 — "Fantastic Mr. Fox", de Roald Dahl
+- 9780743273565 — "The Great Gatsby", de F. Scott Fitzgerald
+
 ## Produção e Deploy
 
 Aplicação em produção (Render):
