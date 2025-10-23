@@ -19,12 +19,13 @@ This project ships with a Dockerfile. Render can build and run it directly.
 In the Render service settings → Environment → Add the following:
 
 - `DATABASE_URL` = paste the connection string from Neon
+- `SECRET_KEY_BASE` = a random secret (generate with `bundle exec rails secret`)
 - `DEVISE_JWT_SECRET` = a random secret (generate with `bundle exec rails secret` locally)
 - `RAILS_ENV` = `production`
 - `RACK_ENV` = `production`
 
 Notes:
-- We do not require `RAILS_MASTER_KEY` because JWT secret is read from `DEVISE_JWT_SECRET` in production.
+- We do not require `RAILS_MASTER_KEY` because `SECRET_KEY_BASE` (and JWT) are read from env vars in production.
 - CORS is already configured to allow `Authorization` header.
 
 ## 4) Deploy

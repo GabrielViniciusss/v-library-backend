@@ -14,6 +14,8 @@ services:
       # Set these in the Render Dashboard (preferred), values here are just placeholders
       - key: DATABASE_URL
         generateValue: false
+      - key: SECRET_KEY_BASE
+        generateValue: false
       - key: DEVISE_JWT_SECRET
         generateValue: false
     # With Docker runtime, Render uses your Dockerfile to build and run.
