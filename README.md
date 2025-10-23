@@ -4,16 +4,16 @@ Esta é uma API RESTful desenvolvida em Ruby on Rails para gerenciar uma platafo
 
 ## Funcionalidades Principais
 
-* [cite_start]**Autenticação:** Via e-mail/senha usando Tokens JWT[cite: 10].
-* [cite_start]**Gerenciamento de Materiais:** CRUD completo para Livros, Artigos e Vídeos, com campos genéricos e específicos[cite: 13, 14].
-* [cite_start]**Gerenciamento de Autores:** CRUD para Autores do tipo Pessoa ou Instituição[cite: 5, 16].
-* [cite_start]**Associações:** Materiais associados a um criador (usuário) e um autor (pessoa/instituição)[cite: 15].
-* [cite_start]**Permissões:** Apenas o usuário criador pode alterar ou remover seus materiais[cite: 18]. [cite_start]A visualização é pública.
-* [cite_start]**Status de Material:** Materiais possuem status (rascunho, publicado, arquivado)[cite: 22].
-* [cite_start]**API Externa:** Integração com OpenLibrary para buscar dados de livros via ISBN durante o cadastro[cite: 25, 26].
-* [cite_start]**Busca:** Endpoint para buscar materiais por título, descrição ou nome do autor[cite: 28].
-* [cite_start]**Paginação:** Resultados das listagens e busca são paginados[cite: 29].
-* [cite_start]**Documentação Interativa:** Interface Swagger UI disponível para explorar e testar a API[cite: 38].
+* **Autenticação:** Via e-mail/senha usando Tokens JWT.
+* **Gerenciamento de Materiais:** CRUD completo para Livros, Artigos e Vídeos, com campos genéricos e específicos.
+* **Gerenciamento de Autores:** CRUD para Autores do tipo Pessoa ou Instituição.
+* **Associações:** Materiais associados a um criador (usuário) e um autor (pessoa/instituição).
+* **Permissões:** Apenas o usuário criador pode alterar ou remover seus materiais. A visualização é pública.
+* **Status de Material:** Materiais possuem status (rascunho, publicado, arquivado).
+* **API Externa:** Integração com OpenLibrary para buscar dados de livros via ISBN durante o cadastro.
+* **Busca:** Endpoint para buscar materiais por título, descrição ou nome do autor.
+* **Paginação:** Resultados das listagens e busca são paginados.
+* **Documentação Interativa:** Interface Swagger UI disponível para explorar e testar a API.
 
 ## Tecnologias Utilizadas
 
