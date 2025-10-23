@@ -40,9 +40,13 @@ class OpenLibraryService
 
     return nil unless book_data
 
+    # Extrai os nomes dos autores, se existirem
+    authors = book_data['authors']&.map { |a| a['name'] }
+
     {
       title: book_data['title'],
-      pages: book_data['number_of_pages']
+      pages: book_data['number_of_pages'],
+      authors: authors
     }
   end
 end
